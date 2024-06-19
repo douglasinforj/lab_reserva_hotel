@@ -6,9 +6,9 @@ integração com banco de dados mysql
 
 ## índice
 
-1. [Ambiente](#ambiente)
+1. [Ambiente_de_desenvolvimento](#ambiente)
 
-## Ambiente de desenvolvimento
+## Ambiente_de_desenvolvimento
 - Ter acesso a banco de dados MySql ou MariaDB
 - Criar banco de dados 'hotel_db'
 - Arquivo de .env (variável de ambiente)
