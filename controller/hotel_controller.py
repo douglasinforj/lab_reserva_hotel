@@ -41,12 +41,12 @@ class HotelController:
 
     def obter_quarto_por_numero(self, numero):
         cursor = self.hotel.conexao.cursor()
-        cursor.execute("SELECT numero, tipo, preco FROM Quartos WHERE numero = %s", (numero,))
-        resultado = cursor.fetchone()
-        if resultado:
-            return Quarto(resultado[0], resultado[1], resultado[2])
+        cursor.execute("SELECT id, numero, tipo, preco FROM Quartos WHERE numero = %s", (numero,))
+        quarto = cursor.fetchone()
+        if quarto:
+            return {"id": quarto[0], "numero": quarto[1], "tipo": quarto[2], "preco": quarto[3]}
         else:
-            raise Exception(f'Quarto com número {numero} não encontrado')
+            raise Exception(f"Quarto com número {numero} não encontrado.")
         
     def listar_clientes(self):
         clientes = self.hotel.listar_clientes()
