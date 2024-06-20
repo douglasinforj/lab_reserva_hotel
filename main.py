@@ -40,9 +40,9 @@ def main():
             numero_quarto, data_checkin, data_checkout = hotel_view.obter_detalhes_verificacao()
             disponibilidade = hotel_controller.verificar_disponibilidade(numero_quarto, data_checkin, data_checkout)
             if disponibilidade:
-                hotel_view.exibir_mensagem(f"O quarto {numero_quarto} está disponível.")
+                hotel_view.exibir_mensagem(f"\nO quarto {numero_quarto} está disponível.")
             else:
-                hotel_view.exibir_mensagem(f"O quarto {numero_quarto} não está disponível.")
+                hotel_view.exibir_mensagem(f"\nO quarto {numero_quarto} não está disponível.")
         elif escolha == "0":
             break
         else:

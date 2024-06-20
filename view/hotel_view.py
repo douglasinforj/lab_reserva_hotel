@@ -7,6 +7,7 @@ class HotelView:
         print("4. Cancelar Reserva")
         print("5. Listar Reservas")
         print("6. Listar Clientes")
+        print("7. Verificar Disponibilidade")
         print("0. Sair")
 
     @staticmethod
@@ -31,7 +32,7 @@ class HotelView:
         return cpf_cliente, numero_quarto, data_checkin, data_checkout
     
 
-    @staticmethod
+   
     def obter_detalhes_verificacao(self):                #disponibilidade de quartos
         numero_quarto = int(input("Número do quarto: "))
         data_checkin = input("Data de check-in (YYYY-MM-DD): ")
