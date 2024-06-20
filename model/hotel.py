@@ -58,5 +58,76 @@ class Hotel:
         """)
         self.conexao.commit()
 
-# instanciando a Class para teste
-hotel = Hotel("Hotel Exemplo")
+# instanciando a Class para teste (Testando o codigo $python hotel.py)
+#hotel = Hotel("Hotel Exemplo")
+
+# Criando as funções para manipulação no banco de dados, dados vindos do hotel_controller.py
+
+        def adicionar_cliente(self, cliente):
+            cursor = self.conexao.cursor()
+            cursor.execute("INSERT INTO Clientes (nome, cpf) VALUES (%s, %s)", (cliente.nome, cliente.cpf))
+            self.conexao.commit()
+        
+        def adicionar_quarto(self, quarto):
+            cursor = self.conexao.cursor()
+            cursor.execute("INSERT INTO Quartos (numero, tipo, preco) VALUES (%s, %s, %s)", (quarto.numero, quarto.tipo, quarto.preco))
+            self.conexao.commit()
+
+        def verificar_disponibilidade(self, quarto_id, data_checkin, data_chekout):
+            cursor = self.conexao.cursor()
+            cursor.exceute("""
+            SELECT * FROM Reservas
+            WHERE quarto_id = %s AND (%s < data_checkout AND %s > data_checkin)
+            """, (quarto_id, data_checkin, data_chekout))
+            resultado = cursor.fetchall()
+            return len(resultado) == 0
+        
+        def fazer_reserva(self, cliente, quarto, data_checkin, data_checkout):
+            cursor = self.conexao.cursor()
+            cursor.execute("SELECT id FROM Clientes WHERE cpf = %s", (cliente.cpf,))
+            cliente_id = cursor.fetchone()[0]
+            cursor.excute("SELECT id FROM Quartos WHERE numer = %s", (quarto.numero,))
+            quarto_id = cursor.fetchone()[0]
+
+            if self.verificar_disponibilidade(quarto_id, data_checkin, data_checkout):
+                cursor.execute("""
+                INSERT INTO Reservas (cliente_id, quarto_id, data_checkin, data_checkout)
+                VALUES (%s, %s, %s, %s)
+                """, (cliente_id, quarto_id, data_checkin, data_checkout))
+                self.conexao.commit()
+                print(f"Reserva feita para o cliente {cliente.nome} no quarto {quarto.numero} de {data_checkin} a {data_checkout}")
+            else:
+                print(f"Quarto {quarto.numero} não está disponivel de {data_checkin} a {data_checkout}.")
+        
+        def cancelar_reserva(self, cliente, quarto, data_checkin, data_checkout):
+            cursor = self.conexao.cursor()
+            cursor.execute("SELECT id FROM Clientes WHERE cpf = %s", (cliente.cpf,))
+            cliente_id = cursor.fetchone()[0]
+            cursor.execute("SELECT id FROM Quartos WHERE numero = %s", (quarto.numero,))
+            quarto_id = cursor.fetchone()[0]
+
+            cursor.execute("""
+            DELETE FROM Reservas
+            WHERE cliente_id = %s AND quarto_id = %s AND data_checkin = %s AND data_checkout = %s
+            """, (cliente_id, quarto_id, data_checkin, data_checkout))
+            self.conexao.commit()
+            if cursor.rowcount > 0:
+                print(f"Reserva cancelada para o cliente {cliente.nome} no quarto {quarto.numero} de {data_checkin} a {data_checkout}.")
+            else:
+                print(f"Reserva não encontrada para o cliente {cliente.nome} no quarto {quarto.numero} de {data_checkin} a {data_checkout}.")
+
+        def listar_reservas(self):
+            cursor = self.conexao.cursor()
+            cursor.execute("""
+            SELECT Clientes.nome, Quartos.numero, Reservas.data_checkin, Reservas.data_checkout
+            FROM Reservas
+            JOIN Clientes ON Reservas.cliente_id = Clientes.id
+            JOIN Quartos ON Reservas.quarto_id = Quartos.id
+            """)
+            reservas = cursor.fetchall()
+            if not reservas:
+                print("Não há reservas.")
+            for reserva in reservas:
+                print(f"Cliente: {reserva[0]}, Quarto: {reserva[1]}, Check-in: {reserva[2]}, Check-out: {reserva[3]}")
+        
+
