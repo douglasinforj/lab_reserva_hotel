@@ -32,3 +32,12 @@ class HotelView:
     @staticmethod
     def exibir_mensagem(mensagem):
         print(mensagem)
+
+    @staticmethod
+    def exibir_clientes(clientes)
+        if not clientes:
+            print("Nenhum cliente cadastrado.")
+        else:
+            print("Clientes cadastrados:")
+            for cliente in clientes:
+                print(f"Nome: {cliente[0]}, CPF: {cliente[1]}")
