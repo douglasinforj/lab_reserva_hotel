@@ -95,11 +95,13 @@ class Hotel:
         """, (cliente_id[0], quarto_id[0], data_checkin, data_checkout))
         self.conexao.commit()
 
-    def cancelar_reserva(self, cliente, quarto, data_checkin, data_checkout):
+        
+
+    def cancelar_reserva(self, cliente, numero_quarto, data_checkin, data_checkout):
         cursor = self.conexao.cursor()
         cursor.execute("SELECT id FROM Clientes WHERE cpf = %s", (cliente.cpf,))
         cliente_id = cursor.fetchone()[0]
-        cursor.execute("SELECT id FROM Quartos WHERE numero = %s", (quarto.numero,))
+        cursor.execute("SELECT id FROM Quartos WHERE numero = %s", (numero_quarto.numero,))
         quarto_id = cursor.fetchone()[0]
 
         cursor.execute("""
