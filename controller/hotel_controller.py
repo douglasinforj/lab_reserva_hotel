@@ -19,7 +19,7 @@ class HotelController:
     def fazer_reserva(self, cpf_cliente, numero_quarto, data_checkin, data_checkout):
         cliente = self.obter_cliente_por_cpf(cpf_cliente)
         quarto = self.obter_quarto_por_numero(numero_quarto)
-        self.hotel.fazer_reserva(self, cpf_cliente, quarto, data_checkin, data_checkout)
+        self.hotel.fazer_reserva(self, cpf_cliente, numero_quarto, data_checkin, data_checkout)
     
     def cancelar_reserva(self, cpf_cliente, numero_quarto, data_checkin, data_checkout):
         cliente = self.obter_cliente_por_cpf(cpf_cliente)
@@ -48,6 +48,6 @@ class HotelController:
         else:
             raise Exception(f'Quarto com número {numero} não encontrado')
         
-    def listar_cliente(self):
+    def listar_clientes(self):
         clientes = self.hotel.listar_clientes()
         return clientes
