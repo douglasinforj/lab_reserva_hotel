@@ -1,7 +1,7 @@
 class HotelView:
     @staticmethod
     def exibir_menu():
-        print("1. Adicionar Cliente")
+        print("\n1. Adicionar Cliente")
         print("2. Adicionar Quarto")
         print("3. Fazer Reserva")
         print("4. Cancelar Reserva")
@@ -39,6 +39,6 @@ class HotelView:
         if not clientes:
             print("Nenhum cliente cadastrado.")
         else:
-            print("Clientes cadastrados:")
+            print("\nClientes cadastrados:")
             for cliente in clientes:
                 print(f"Nome: {cliente[0]}, CPF: {cliente[1]}")
