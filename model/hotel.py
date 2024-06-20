@@ -75,22 +75,25 @@ class Hotel:
         resultado = cursor.fetchall()
         return len(resultado) == 0
 
-    def fazer_reserva(self, cliente, quarto, data_checkin, data_checkout):
+    def fazer_reserva(self, cpf_cliente, numero_quarto, data_checkin, data_checkout):
         cursor = self.conexao.cursor()
-        cursor.execute("SELECT id FROM Clientes WHERE cpf = %s", (cliente.cpf,))
-        cliente_id = cursor.fetchone()[0]
-        cursor.execute("SELECT id FROM Quartos WHERE numero = %s", (quarto.numero,))
-        quarto_id = cursor.fetchone()[0]
-
-        if self.verificar_disponibilidade(quarto_id, data_checkin, data_checkout):
-            cursor.execute("""
+        cursor.execute("SELECT id FROM Clientes WHERE cpf = %s", (cpf_cliente,))
+        cliente_id = cursor.fetchone()
+        
+        if cliente_id is None:
+            raise Exception(f"Cliente com CPF {cpf_cliente} não encontrado.")
+        
+        cursor.execute("SELECT id FROM Quartos WHERE numero = %s", (numero_quarto,))
+        quarto_id = cursor.fetchone()
+        
+        if quarto_id is None:
+            raise Exception(f"Quarto com número {numero_quarto} não encontrado.")
+        
+        cursor.execute("""
             INSERT INTO Reservas (cliente_id, quarto_id, data_checkin, data_checkout)
             VALUES (%s, %s, %s, %s)
-            """, (cliente_id, quarto_id, data_checkin, data_checkout))
-            self.conexao.commit()
-            print(f"Reserva feita para o cliente {cliente.nome} no quarto {quarto.numero} de {data_checkin} a {data_checkout}.")
-        else:
-            print(f"Quarto {quarto.numero} não está disponível de {data_checkin} a {data_checkout}.")
+        """, (cliente_id[0], quarto_id[0], data_checkin, data_checkout))
+        self.conexao.commit()
 
     def cancelar_reserva(self, cliente, quarto, data_checkin, data_checkout):
         cursor = self.conexao.cursor()
@@ -119,9 +122,9 @@ class Hotel:
         """)
         reservas = cursor.fetchall()
         if not reservas:
-            print("Não há reservas.")
+            print("\nNão há reservas.")
         for reserva in reservas:
-            print(f"Cliente: {reserva[0]}, Quarto: {reserva[1]}, Check-in: {reserva[2]}, Check-out: {reserva[3]}")
+            print(f"\nCliente: {reserva[0]}, Quarto: {reserva[1]}, Check-in: {reserva[2]}, Check-out: {reserva[3]}")
 
     def listar_clientes(self):
         cursor = self.conexao.cursor()
