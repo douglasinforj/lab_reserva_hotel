@@ -32,7 +32,7 @@ class HotelController:
 
     def obter_cliente_por_cpf(self, cpf):
         cursor = self.hotel.conexao.cursor()
-        cursor.exceute("SELECT nome, cpf FROM Clientes WHERE cpf = %s", (cpf,))
+        cursor.execute("SELECT nome, cpf FROM Clientes WHERE cpf = %s", (cpf,))
         resultado = cursor.fetchone()
         if resultado:
              return Cliente(resultado[0], resultado[1])
@@ -47,3 +47,7 @@ class HotelController:
             return Quarto(resultado[0], resultado[1], resultado[2])
         else:
             raise Exception(f'Quarto com número {numero} não encontrado')
+        
+    def listar_cliente(self):
+        clientes = self.hotel.listar_clientes()
+        return clientes
