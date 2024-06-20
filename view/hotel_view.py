@@ -6,6 +6,7 @@ class HotelView:
         print("3. Fazer Reserva")
         print("4. Cancelar Reserva")
         print("5. Listar Reservas")
+        print("6. Listar Clientes")
         print("0. Sair")
 
     @staticmethod
@@ -34,7 +35,7 @@ class HotelView:
         print(mensagem)
 
     @staticmethod
-    def exibir_clientes(clientes)
+    def exibir_clientes(clientes):
         if not clientes:
             print("Nenhum cliente cadastrado.")
         else:
