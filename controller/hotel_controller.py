@@ -51,3 +51,7 @@ class HotelController:
     def listar_clientes(self):
         clientes = self.hotel.listar_clientes()
         return clientes
+    
+    def verificar_disponibilidade(self, numero_quarto, data_chekin, data_checkout):
+        quarto = self.obter_quarto_por_numero(numero_quarto)
+        return self.hotel.verificar_disponibilidade(quarto['id'], data_chekin, data_checkout)
