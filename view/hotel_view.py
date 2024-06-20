@@ -29,6 +29,15 @@ class HotelView:
         data_checkin = input("Data de check-in (YYYY-MM-DD): ")
         data_checkout = input("Data de check-out (YYYY-MM-DD): ")
         return cpf_cliente, numero_quarto, data_checkin, data_checkout
+    
+
+    @staticmethod
+    def obter_detalhes_verificacao(self):                #disponibilidade de quartos
+        numero_quarto = int(input("Número do quarto: "))
+        data_checkin = input("Data de check-in (YYYY-MM-DD): ")
+        data_checkout = input("Data de check-out (YYYY-MM-DD): ")
+        return numero_quarto, data_checkin, data_checkout
+
 
     @staticmethod
     def exibir_mensagem(mensagem):
