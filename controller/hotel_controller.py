@@ -19,12 +19,12 @@ class HotelController:
     def fazer_reserva(self, cpf_cliente, numero_quarto, data_checkin, data_checkout):
         cliente = self.obter_cliente_por_cpf(cpf_cliente)
         quarto = self.obter_quarto_por_numero(numero_quarto)
-        self.hotel.fazer_reserva(self, cpf_cliente, numero_quarto, data_checkin, data_checkout)
+        self.hotel.fazer_reserva(cpf_cliente, numero_quarto, data_checkin, data_checkout)
     
-    def cancelar_reserva(self, cpf_cliente, numero_quarto, data_checkin, data_checkout):
+    def fazer_reserva(self, cpf_cliente, numero_quarto, data_checkin, data_checkout):
         cliente = self.obter_cliente_por_cpf(cpf_cliente)
         quarto = self.obter_quarto_por_numero(numero_quarto)
-        self.hotel.cancelar_reserva(cliente, quarto, data_checkin, data_checkout)
+        self.hotel.fazer_reserva(cpf_cliente, numero_quarto, data_checkin, data_checkout)
         
 
     def listar_reservas(self):
