@@ -23,7 +23,7 @@ class Hotel:
                 print("Conexão com o banco de dados MYSQL foi bem Sucedida!")
                 return conexao
         except Error as e:
-            print(f"Erro ao conetar ao MYSQL: {e}")
+            print(f"Erro ao conectar ao MYSQL: {e}")
             return None
 
 
